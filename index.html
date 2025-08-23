@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>En‑Cure Farms — Land Development, Farm Management, Organic Conversion</title>
-  <meta name="description" content="En‑Cure Farms builds and manages sustainable, profitable farms in Karnataka: land development, farm management, and organic conversion."/>
+  <title>En-Cure Farms — Land Development, Farm Management, Organic Conversion</title>
+  <meta name="description" content="En-Cure Farms builds and manages sustainable, profitable farms in Karnataka: land development, farm management, and organic conversion."/>
   <meta name="theme-color" content="#0b0f11" />
   <meta name="color-scheme" content="dark" />
   <meta name="format-detection" content="telephone=no" />
@@ -12,16 +12,80 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <!-- Favicon & App Icons -->
-<link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="192x192" href="favicons/android-chrome-192x192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="favicons/android-chrome-512x512.png">
-<link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
-<link rel="shortcut icon" href="favicons/favicon.ico" type="image/x-icon">
 
-<!-- Web App Manifest -->
-<link rel="manifest" href="favicons/site.webmanifest">
+  <!-- Favicons (as you provided) -->
+  <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="favicons/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="favicons/android-chrome-512x512.png">
+  <link rel="apple-touch-icon" href="favicons/apple-touch-icon.png">
+  <link rel="shortcut icon" href="favicons/favicon.ico" type="image/x-icon">
+  <link rel="manifest" href="favicons/site.webmanifest">
+<style>
+  /* Preloader Base */
+  #preloader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(10, 25, 20, 0.9);
+    backdrop-filter: blur(12px) saturate(160%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index: 9999;
+    transition: opacity 1s ease, visibility 1s ease;
+  }
+  #preloader.hidden { opacity: 0; visibility: hidden; }
+
+  .preloader-content { text-align: center; animation: fadeIn 1s ease forwards; }
+
+  .logo-wrap { position: relative; display: inline-block; }
+
+  .preloader-logo {
+    width: 120px; height: auto;
+    opacity: 0; transform: scale(0.8);
+    animation: logoPop 1.5s ease forwards;
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+
+  .glow {
+    position: absolute; top: 50%; left: 50%;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(14,159,110,0.5), transparent 70%);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    filter: blur(40px);
+    animation: pulse 2.5s infinite alternate;
+    z-index: -1;
+  }
+
+  .loading-text {
+    margin-top: 200px;
+    font-size: 1.2rem; font-weight: 600;
+    color: #c7f9cc; letter-spacing: 1px;
+    animation: blink 1.8s infinite;
+  }
+
+  /* Progress Ring */
+  .progress-ring {
+    transform: rotate(-90deg);
+  }
+  .progress-ring__circle {
+    stroke-dasharray: 528; /* 2πr, r=84 */
+    stroke-dashoffset: 528;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.3s linear;
+  }
+
+  /* Animations */
+  @keyframes logoPop { to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+  @keyframes pulse { from { transform: translate(-50%, -50%) scale(1); opacity: 0.6; } to { transform: translate(-50%, -50%) scale(1.2); opacity: 0.2; } }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
   <style>
     :root{
       --bg:#070a0b;
@@ -31,8 +95,8 @@
       --stroke:rgba(255,255,255,.16);
       --text:#ecfff0;
       --muted:#b9cabd;
-      --brand-1:#81f34d; /* light from logo */
-      --brand-2:#087a4a; /* dark from logo */
+      --brand-1:#81f34d;
+      --brand-2:#087a4a;
       --brand:linear-gradient(135deg,var(--brand-1),#3ad46c,var(--brand-2));
       --accent: radial-gradient(60% 60% at 20% 20%,rgba(61,199,92,.35),transparent 60%),
                 radial-gradient(45% 45% at 80% 20%,rgba(16,84,57,.35),transparent 60%),
@@ -41,6 +105,7 @@
       --shadow-sm:0 10px 28px rgba(0,0,0,.35);
       --radius:22px;
       --gridline: rgba(255,255,255,.06);
+      --glow: 0 0 0px rgba(129,243,77,.0), 0 0 0px rgba(8,122,74,.0);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -64,7 +129,6 @@
     /* ---------- Page background layers ---------- */
     #bg-wrap{position:fixed; inset:0; z-index:-3; overflow:hidden}
     #gradient{position:absolute; inset:-30% -30% 0 -30%; filter:blur(80px); background:var(--accent)}
-    /* subtle reticle grid */
     #grid-overlay{position:fixed; inset:0; z-index:-2; pointer-events:none; background-image:linear-gradient(var(--gridline) 1px, transparent 1px), linear-gradient(90deg,var(--gridline) 1px, transparent 1px); background-size:80px 80px; mask-image:radial-gradient(70% 60% at 50% 35%,#000 60%, transparent 100%)}
 
     /* ---------- Glass Nav ---------- */
@@ -74,7 +138,6 @@
     .brand img{width:42px; height:42px; object-fit:contain}
     .brand .title{font-family:"Space Grotesk",sans-serif; font-weight:700; letter-spacing:.5px}
     .nav a.button{padding:10px 16px; border-radius:14px; background:var(--brand); box-shadow:var(--shadow-sm); font-weight:700}
-    /* mobile menu */
     .menu-btn{display:grid; place-items:center; width:42px; height:42px; border-radius:12px; border:1px solid var(--stroke); background:rgba(255,255,255,.06)}
     .menu{position:fixed; inset:64px 4vw auto 4vw; background:rgba(8,10,10,.85); border:1px solid var(--stroke); border-radius:16px; box-shadow:var(--shadow-lg); padding:14px; display:none}
     .menu.open{display:block}
@@ -87,10 +150,10 @@
     .hero h1{font-family:"Space Grotesk"; font-weight:700; line-height:1.06; font-size:clamp(2.2rem,8vw,4rem); margin:14px 0}
     .hero p{color:var(--muted); font-size:clamp(1rem,2.6vw,1.25rem); max-width:820px; margin-inline:auto}
     .cta{margin-top:22px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
-    .button{display:inline-flex; align-items:center; gap:10px; padding:14px 18px; border-radius:16px; border:1px solid var(--stroke); background:var(--glass); box-shadow:var(--shadow-sm); font-weight:700; transition:transform .18s ease}
+    .button{display:inline-flex; align-items:center; gap:10px; padding:14px 18px; border-radius:16px; border:1px solid var(--stroke); background:var(--glass); box-shadow:var(--shadow-sm); font-weight:700; transition:transform .18s ease, box-shadow .18s ease}
     .button.primary{background:var(--brand); color:#052b18}
     .button:hover{transform:translateY(-1px)}
-    /* hero 3D canvas overlay */
+    .button.primary:hover{box-shadow:0 10px 30px rgba(61,199,92,.25)}
     #hero3d{position:absolute; inset:0; z-index:-1}
     .orb{position:absolute; width:34vmin; height:34vmin; border-radius:50%; filter:blur(18px); background:conic-gradient(from 220deg,var(--brand-1),#3ad46c,var(--brand-2)); opacity:.5; left:6%; top:12%; animation:float 9s ease-in-out infinite}
     .orb.two{left:auto; right:6%; top:40%; width:26vmin; height:26vmin; animation-duration:12s; opacity:.35}
@@ -130,13 +193,73 @@
     .chart-card{padding:18px}
     canvas{width:100%; height:280px}
 
-    /* ---------- Team ---------- */
+    /* ---------- Team (UPGRADED) ---------- */
     .team{display:grid; gap:18px}
     @media(min-width:900px){.team{grid-template-columns:repeat(3,1fr)}}
-    .avatar{width:78px; height:78px; border-radius:20px; background:var(--brand); display:grid; place-items:center; font-weight:800; color:#052b18; box-shadow:var(--shadow-sm)}
-    .member{display:flex; gap:14px; align-items:flex-start}
+    .member{display:flex; gap:14px; align-items:flex-start; position:relative; overflow:visible}
+    .member .bio{z-index:1}
     .member h4{margin:0; font-family:'Space Grotesk'}
     .member p{margin:.25rem 0 0; color:var(--muted)}
+    /* Futuristic 3D portrait frame */
+    .portrait{
+      width:min(220px, 45vw);
+      aspect-ratio:1/1.15;
+      position:relative;
+      perspective:1000px;
+      border-radius:22px;
+      transform-style:preserve-3d;
+      isolation:isolate;
+      flex-shrink:0;
+    }
+    .portrait .frame{
+      position:absolute; inset:0;
+      border-radius:inherit;
+      background:
+        radial-gradient(120% 120% at 110% -10%, rgba(129,243,77,.25), transparent 60%),
+        radial-gradient(120% 120% at -10% 110%, rgba(8,122,74,.18), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--stroke);
+      box-shadow:var(--shadow-lg), 0 0 0 1px rgba(129,243,77,.06) inset;
+      overflow:hidden;
+      transform:rotateX(8deg) rotateY(-6deg);
+      transition:transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease, filter .4s ease;
+    }
+    /* animated neon rim */
+    .portrait .rim{
+      position:absolute; inset:-1px;
+      pointer-events:none;
+      border-radius:inherit;
+      background:conic-gradient(from 220deg, rgba(129,243,77,.85), rgba(58,212,108,.35), rgba(8,122,74,.85), rgba(58,212,108,.35), rgba(129,243,77,.85));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+              mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      padding:2px;
+      filter:blur(6px) saturate(140%);
+      opacity:.55; mix-blend-mode:screen;
+      animation:spin 12s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .portrait img{
+      position:absolute; inset:8px; width:calc(100% - 16px); height:calc(100% - 16px);
+      object-fit:cover; border-radius:18px; filter:saturate(1.05) contrast(1.02);
+      transform:translateZ(40px);
+    }
+    .portrait .gridGlow{
+      position:absolute; inset:0; background:
+        radial-gradient(40% 60% at 70% 30%, rgba(129,243,77,.2), transparent 60%),
+        radial-gradient(35% 50% at 30% 70%, rgba(8,122,74,.18), transparent 65%);
+      mix-blend-mode:overlay; pointer-events:none; border-radius:inherit;
+    }
+    .portrait:hover .frame{
+      transform:rotateX(0deg) rotateY(0deg) translateZ(0);
+      box-shadow:var(--shadow-lg), 0 0 0 1px rgba(129,243,77,.18) inset;
+      filter:drop-shadow(0 20px 40px rgba(129,243,77,.08));
+    }
+
+    /* Link chips */
+    .chips{display:flex; gap:10px; margin-top:6px; flex-wrap:wrap}
+    .tag{transition:transform .12s ease}
+    .tag:hover{transform:translateY(-1px)}
 
     /* ---------- Testimonials ---------- */
     .slider{display:grid; grid-auto-flow:column; grid-auto-columns:85%; gap:18px; overflow-x:auto; scroll-snap-type:x mandatory; padding-bottom:6px}
@@ -170,6 +293,20 @@
   </style>
 </head>
 <body>
+  <!-- PRELOADER -->
+<div id="preloader">
+  <div class="preloader-content">
+    <div class="logo-wrap">
+      <svg class="progress-ring" width="180" height="180">
+        <circle class="progress-ring__circle" stroke="#0e9f6e" stroke-width="6" fill="transparent" r="84" cx="90" cy="90"/>
+      </svg>
+      <img src="logo.webp" alt="En-Cure Farms Logo" class="preloader-logo">
+      <div class="glow"></div>
+    </div>
+    <p class="loading-text">Growing Nature...</p>
+  </div>
+</div>
+
   <!-- BACKGROUND LAYERS -->
   <div id="bg-wrap">
     <div id="gradient"></div>
@@ -183,8 +320,8 @@
   <div class="nav" role="navigation" aria-label="Primary">
     <div class="inner container">
       <div class="brand">
-        <img alt="En‑Cure butterfly logo" src="logo.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/3/3f/Butterfly_icon.svg'">
-        <div class="title">En‑Cure Farms</div>
+        <img alt="En-Cure butterfly logo" src="logo.png" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/3/3f/Butterfly_icon.svg'">
+        <div class="title">En-Cure Farms</div>
       </div>
       <div class="hide-mobile" style="display:none; gap:16px">
         <a href="#services">Services</a>
@@ -192,7 +329,7 @@
         <a href="#dashboard">Insights</a>
         <a href="#team">Team</a>
         <a href="#contact" class="button">Contact</a>
-        <a href="#schedule" class="button primary"><i class="fa-regular fa-calendar"></i><span>Schedule</span></a>
+        <a href="#schedule" class="button primary magnet"><i class="fa-regular fa-calendar"></i><span>Schedule</span></a>
       </div>
       <button class="menu-btn" aria-label="Open menu" id="menuBtn"><i class="fa-solid fa-bars"></i></button>
     </div>
@@ -214,7 +351,7 @@
     <div class="reveal">
       <div class="badge"><i class="fa-solid fa-seedling"></i> Sustainable • Profitable • Managed</div>
       <h1 id="hero-title">Transforming Land into Legacy</h1>
-      <p>We plan, build, and operate high‑performance farms in Karnataka — from <strong>land development</strong> to <strong>farm management</strong> and <strong>organic conversion</strong>. A premium, tech‑forward partner for serious outcomes.</p>
+      <p>We plan, build, and operate high-performance farms in Karnataka — from <strong>land development</strong> to <strong>farm management</strong> and <strong>organic conversion</strong>. A premium, tech-forward partner for serious outcomes.</p>
       <div class="cta">
         <a class="button primary magnet" href="#services"><i class="fa-solid fa-arrow-down"></i> Explore Services</a>
         <a class="button magnet" href="#dashboard"><i class="fa-solid fa-chart-line"></i> Client Insights</a>
@@ -235,7 +372,7 @@
   <!-- SERVICES -->
   <section id="services" class="container" aria-labelledby="services-title">
     <h2 id="services-title" class="section-head reveal">What we do</h2>
-    <p class="muted reveal">From raw land to recurring harvests — end‑to‑end services tuned for Karnataka’s soils and water realities.</p>
+    <p class="muted reveal">From raw land to recurring harvests — end-to-end services tuned for Karnataka’s soils and water realities.</p>
     <div class="grid cols-3" style="margin-top:10px">
       <article class="card tilt reveal" aria-label="Land Development">
         <div class="icon"><i class="fa-solid fa-tractor"></i></div>
@@ -251,9 +388,9 @@
       <article class="card tilt reveal" aria-label="Farm Management">
         <div class="icon"><i class="fa-solid fa-helmet-safety"></i></div>
         <h3>Farm Management</h3>
-        <p>Full‑stack operations — crop plans, procurement, labour, input scheduling, IoT monitoring, monthly reporting, and field supervision.</p>
+        <p>Full-stack operations — crop plans, procurement, labour, input scheduling, IoT monitoring, monthly reporting, and field supervision.</p>
         <ul class="muted" style="margin:10px 0 0 18px">
-          <li>Crop‑wise budgets & cashflows</li>
+          <li>Crop-wise budgets & cashflows</li>
           <li>Seasonal labour scheduling</li>
           <li>IoT alerts & field audits</li>
         </ul>
@@ -274,11 +411,11 @@
   <!-- DIFFERENTIATORS -->
   <section id="why" class="container feature" aria-labelledby="why-title">
     <div class="reveal">
-      <span class="tag"><i class="fa-solid fa-bolt"></i> The En‑Cure Difference</span>
+      <span class="tag"><i class="fa-solid fa-bolt"></i> The En-Cure Difference</span>
       <h2 id="why-title" class="section-head" style="margin:8px 0 12px">Technology + Agronomy, not either/or</h2>
-      <p class="muted">Drone surveys, sensor‑based irrigation, satellite insights, and a clean client dashboard. Backed by practical on‑ground agronomy from our team — <b>Mallikarjun (CEO)</b>, <b>Mukesh (CMO & CFO)</b>, <b>Prajwal (CTO)</b>. We optimise resources and deliver predictable outcomes.</p>
+      <p class="muted">Drone surveys, sensor-based irrigation, satellite insights, and a clean client dashboard. Backed by practical on-ground agronomy from our team — <b>Mallikarjun (CEO)</b>, <b>Mukesh (CMO & CFO)</b>, <b>Prajwal (CTO)</b>. We optimise resources and deliver predictable outcomes.</p>
       <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap">
-        <span class="tag"><i class="fa-solid fa-trowel"></i> Soil‑first approach</span>
+        <span class="tag"><i class="fa-solid fa-trowel"></i> Soil-first approach</span>
         <span class="tag"><i class="fa-solid fa-droplet"></i> Water intelligence</span>
         <span class="tag"><i class="fa-solid fa-satellite"></i> Remote sensing</span>
         <span class="tag"><i class="fa-solid fa-shield-heart"></i> Certification support</span>
@@ -297,39 +434,57 @@
     <p class="reveal muted" style="margin-top:12px">A secure portal shows growth curves, input costs, harvest windows, and water use — accessible on mobile for every client.</p>
   </section>
 
-  <!-- TEAM -->
+  <!-- TEAM (UPGRADED) -->
   <section id="team" class="container" aria-labelledby="team-title">
     <h2 id="team-title" class="section-head reveal">Meet the Team</h2>
-    <p class="muted reveal">Hands‑on operators with deep love for soil and systems.</p>
+    <p class="muted reveal">Hands-on operators with deep love for soil and systems.</p>
     <div class="team" style="margin-top:10px">
-      <div class="card reveal member">
-        <div class="avatar" aria-hidden="true">MC</div>
-        <div>
+      <!-- Member 1 -->
+      <div class="card reveal member tilt">
+        <div class="portrait magnet" data-tilt>
+          <div class="frame"></div>
+          <div class="rim"></div>
+          <img src="team/mallikarjun.jpg" alt="Mallikarjun Chougala — CEO & Founder" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1502685104226-ee32379fefbe?q=80&w=800&auto=format&fit=crop'">
+          <div class="gridGlow"></div>
+        </div>
+        <div class="bio">
           <h4>Mallikarjun Chougala</h4>
           <p>CEO & Founder — Strategy, agronomy programs, and land development.</p>
-          <div style="display:flex; gap:10px; margin-top:6px">
+          <div class="chips">
             <a class="tag" href="https://www.linkedin.com/in/mallikarjun-chougala-28188a199/"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
             <a class="tag" href="mailto:encurefarms@gmail.com?subject=I%20want%20to%20grow%20with%20En-Cure%20Farms!"><i class="fa-regular fa-envelope"></i> Email</a>
           </div>
         </div>
       </div>
-      <div class="card reveal member">
-        <div class="avatar" aria-hidden="true">MM</div>
-        <div>
+      <!-- Member 2 -->
+      <div class="card reveal member tilt">
+        <div class="portrait magnet" data-tilt>
+          <div class="frame"></div>
+          <div class="rim"></div>
+          <img src="team/mukesh.jpg" alt="Mukesh Mahato — CMO & CFO" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=800&auto=format&fit=crop'">
+          <div class="gridGlow"></div>
+        </div>
+        <div class="bio">
           <h4>Mukesh Mahato</h4>
           <p>CMO & CFO — Brand, partnerships, and financing roadmaps for clients.</p>
-          <div style="display:flex; gap:10px; margin-top:6px">
+          <div class="chips">
             <a class="tag" href="https://www.linkedin.com/in/mukesh-mahato-95580a277/"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
             <a class="tag" href="mailto:mahatomukesh977@gmail.com?subject=I%20want%20to%20grow%20with%20En-Cure%20Farms!"><i class="fa-regular fa-envelope"></i> Email</a>
           </div>
         </div>
       </div>
-      <div class="card reveal member">
-        <div class="avatar" aria-hidden="true">PB</div>
-        <div>
+      <!-- Member 3 -->
+      <div class="card reveal member tilt">
+        <div class="portrait magnet" data-tilt>
+          <div class="frame"></div>
+          <div class="rim"></div>
+          <img src="team/prajwal.jpg" alt="Prajwal Bedavatti — CTO" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800&auto=format&fit=crop'">
+          <div class="gridGlow"></div>
+        </div>
+        <div class="bio">
           <h4>Prajwal Bedavatti</h4>
           <p>CTO — Client portal, IoT stack, remote sensing, and data products.</p>
-          <div style="display:flex; gap:10px; margin-top:6px">
+          <div class="chips">
             <a class="tag" href="https://www.linkedin.com/in/prajwalworld/"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
             <a class="tag" href="mailto:encurefarm@gmail.com?subject=I%20want%20to%20grow%20with%20En-Cure%20Farms!"><i class="fa-regular fa-envelope"></i> Email</a>
           </div>
@@ -340,11 +495,11 @@
 
   <!-- TESTIMONIALS -->
   <section class="container" aria-labelledby="testi-title">
-    <h2 id="testi-title" class="section-head reveal">Field‑proven results</h2>
+    <h2 id="testi-title" class="section-head reveal">Field-proven results</h2>
     <div class="slider" aria-live="polite">
       <div class="card reveal"><h3>“We hit organic in 18 months.”</h3><p class="muted">Yield recovered and input costs fell after the soil program.</p></div>
       <div class="card reveal"><h3>“Real numbers every month.”</h3><p class="muted">The dashboard changed how we make decisions.</p></div>
-      <div class="card reveal"><h3>“Water savings were dramatic.”</h3><p class="muted">Sensor‑based drip cut use ~40% during summer.</p></div>
+      <div class="card reveal"><h3>“Water savings were dramatic.”</h3><p class="muted">Sensor-based drip cut use ~40% during summer.</p></div>
     </div>
   </section>
 
@@ -359,16 +514,13 @@
         <a class="button primary magnet" href="#contact"><i class="fa-regular fa-calendar"></i> Book now</a>
       </div>
       <div style="margin-top:16px; border-radius:16px; overflow:hidden; border:1px solid var(--stroke); background:rgba(255,255,255,.04); min-height:360px; display:grid; place-items:center">
-        <!-- Replace the placeholder with your Calendly embed -->
-        <!-- Calendly inline widget begin -->
-<div
-  class="calendly-inline-widget"
-  data-url="https://calendly.com/encurefarm/30min?primary_color=228B22&hide_gdpr_banner=1"
-  style="min-width:320px; height:700px;">
-</div>
-<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-<!-- Calendly inline widget end -->
-
+        <!-- Calendly inline widget -->
+        <div
+          class="calendly-inline-widget"
+          data-url="https://calendly.com/encurefarm/30min?primary_color=228B22&hide_gdpr_banner=1"
+          style="min-width:320px; height:700px;">
+        </div>
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
       </div>
     </div>
   </section>
@@ -378,8 +530,8 @@
     <h2 id="faq-title" class="section-head reveal">Questions we get a lot</h2>
     <div class="grid">
       <details class="reveal"><summary>How fast can you start a new project?</summary><p class="muted">We can mobilise within 1–2 weeks after scope & budgeting are finalised.</p></details>
-      <details class="reveal"><summary>Do you manage farms for out‑of‑state owners?</summary><p class="muted">Yes. We run end‑to‑end operations with monthly reporting and video audits.</p></details>
-      <details class="reveal"><summary>What does the organic conversion timeline look like?</summary><p class="muted">Most farms reach certification‑ready status in ~18 months with our program.</p></details>
+      <details class="reveal"><summary>Do you manage farms for out-of-state owners?</summary><p class="muted">Yes. We run end-to-end operations with monthly reporting and video audits.</p></details>
+      <details class="reveal"><summary>What does the organic conversion timeline look like?</summary><p class="muted">Most farms reach certification-ready status in ~18 months with our program.</p></details>
     </div>
   </section>
 
@@ -398,7 +550,7 @@
         </form>
       </div>
       <div class="card reveal" style="display:grid; gap:10px">
-        <h3 style="font-family:'Space Grotesk'">En‑Cure Farms</h3>
+        <h3 style="font-family:'Space Grotesk'">En-Cure Farms</h3>
         <p class="muted">Karnataka, India</p>
         <a class="button magnet" href="tel:+918050818548"><i class="fa-solid fa-phone"></i> Call</a>
         <a class="button magnet" href="mailto:hello@encurefarms.com"><i class="fa-regular fa-envelope"></i> Email</a>
@@ -409,7 +561,7 @@
 
   <footer class="container">
     <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap">
-      <small>© <span id="year"></span> En‑Cure Farms. All rights reserved.</small>
+      <small>© <span id="year"></span> En-Cure Farms. All rights reserved.</small>
       <small class="muted">Built with love for land & environment.</small>
     </div>
   </footer>
@@ -442,21 +594,16 @@
       camera.position.set(0, 0.2, 3.2);
       const light = new THREE.DirectionalLight(0xffffff, 1.1); light.position.set(5,5,5); scene.add(light);
       const amb = new THREE.AmbientLight(0x88aa88, .5); scene.add(amb);
-      // Rotating knot with gradient material
       const geo = new THREE.TorusKnotGeometry(0.9, 0.26, 180, 32, 2, 3);
       const mat = new THREE.MeshPhysicalMaterial({roughness:.35, metalness:.1, clearcoat:.7, emissive:new THREE.Color('#0a3a23'), color:new THREE.Color('#48e06a'), transmission:.04});
       const knot = new THREE.Mesh(geo, mat); knot.rotation.x = .7; scene.add(knot);
-      // Starfield points
       const pts = new Float32Array(3000*3);
       for(let i=0;i<3000;i++){ const r = 6 + Math.random()*12; const a = Math.random()*Math.PI*2; const b = (Math.random()-0.5)*Math.PI; pts[i*3]=Math.cos(a)*Math.cos(b)*r; pts[i*3+1]=Math.sin(b)*r*.6; pts[i*3+2]=Math.sin(a)*Math.cos(b)*r; }
       const stars = new THREE.Points(new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(pts,3)), new THREE.PointsMaterial({size:0.01, color:'#81f34d'}));
       scene.add(stars);
-      // Resize
       function resize(){ const w = heroCanvas.clientWidth, h = heroCanvas.clientHeight; renderer.setSize(w,h,false); camera.aspect = w/h; camera.updateProjectionMatrix(); }
       resize(); addEventListener('resize', resize);
-      // Mouse parallax
       let mx=0,my=0; heroCanvas.addEventListener('pointermove', e=>{ const r=heroCanvas.getBoundingClientRect(); mx=((e.clientX-r.left)/r.width-.5)*.6; my=((e.clientY-r.top)/r.height-.5)*.6;});
-      // Animate
       function tick(){ requestAnimationFrame(tick); knot.rotation.y += 0.0035; knot.rotation.x += 0.001; camera.position.x += (mx - camera.position.x)*0.03; camera.position.y += ( -my - camera.position.y)*0.03; camera.lookAt(0,0,0); renderer.render(scene,camera);} tick();
     }
 
@@ -466,8 +613,8 @@
       btn.addEventListener('mouseleave', ()=> btn.style.transform='');
     });
 
-    // Tilt effect for cards
-    document.querySelectorAll('.tilt').forEach(el=>{
+    // Tilt effect for cards / portraits
+    document.querySelectorAll('.tilt, .portrait[data-tilt]').forEach(el=>{
       el.addEventListener('mousemove', (e)=>{
         const r = el.getBoundingClientRect();
         const x = (e.clientX - r.left)/r.width - .5; const y = (e.clientY - r.top)/r.height - .5;
@@ -510,5 +657,37 @@
     const org = {"@context":"https://schema.org","@type":"Organization","name":"En-Cure Farms","url":document.location.origin,"logo":"logo.png","sameAs":[]};
     const script = document.createElement('script'); script.type='application/ld+json'; script.textContent=JSON.stringify(org); document.head.appendChild(script);
   </script>
+  <script>
+  // Progress ring setup
+  const circle = document.querySelector('.progress-ring__circle');
+  const radius = circle.r.baseVal.value;
+  const circumference = 2 * Math.PI * radius;
+  circle.style.strokeDasharray = `${circumference} ${circumference}`;
+  circle.style.strokeDashoffset = circumference;
+
+  function setProgress(percent) {
+    const offset = circumference - percent / 100 * circumference;
+    circle.style.strokeDashoffset = offset;
+  }
+
+  // Fake loading progress
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress += 2;
+    setProgress(progress);
+    if (progress >= 100) {
+      clearInterval(interval);
+      document.getElementById("preloader").classList.add("hidden");
+    }
+  }, 50);
+
+  // Safety net: hide preloader once window fully loads
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      document.getElementById("preloader").classList.add("hidden");
+    }, 500);
+  });
+</script>
+
 </body>
 </html>
